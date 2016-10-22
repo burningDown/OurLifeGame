@@ -19,7 +19,6 @@ public class MapPanelTest {
 		mapPanel.setMapCell(3, 3, 1);
 		mapPanel.setMapCell(4, 2, 1);
 		mapPanel.setMapCell(4, 3, 1);
-		mapPanel.countMap();
 		assertEquals(4, mapPanel.countNeighbors(3, 3));
 	}
 

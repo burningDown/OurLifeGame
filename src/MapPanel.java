@@ -18,7 +18,6 @@ public class MapPanel extends JPanel {
     private int mCountY;
     private int[][] mMap;		//这里方括号[]位置
     private int[][] mNextMap;		//这里方括号[]位置
-    private int[][] mCountMapCell;
     
     private boolean isDrawing = false;
 
@@ -31,7 +30,6 @@ public class MapPanel extends JPanel {
         mCountY = MainFrame.HEIGHT/MainFrame.CELLSIZE;
         mMap = new int[mCountY][mCountX];
         mNextMap = new int[mCountY][mCountX];
-        mCountMapCell = new int[mCountY + 3][mCountX + 3];
 
         timer = new Timer(MainFrame.DELAY, new ActionListener(){
 
@@ -113,20 +111,8 @@ public class MapPanel extends JPanel {
                  mMap[j][i] = mNextMap[j][i];
     }
     
-    public void countMap() {
-    	int x = mCountX +1, y = mCountY + 1;
-    	for(int i=2; i<=y; i++)
-    		for(int j=2; j<=x;j++)
-    			mCountMapCell[i][j] = mCountMapCell[i-1][j] + mCountMapCell[i][j-1] - mCountMapCell[i-1][j-1] + mMap[i-2][j-2];
-    	
-    	for(int i=2; i<y; i++)
-    		mCountMapCell[i][x] = mCountMapCell[i][x - 1];
-    	for(int j=2; j<x; j++)
-    		mCountMapCell[y][j] = mCountMapCell[y - 1][j];
-    	mCountMapCell[y][x] = mCountMapCell[y - 1][x - 1];
-    }
     public int countNeighbors(int cellX, int cellY) {
-        /*int count = 0;
+        int count = 0;
         for(int i=cellX-1;i<=cellX+1;i++)
             for(int j=cellY-1;j<=cellY+1;j++) {
                 if(i>=0 && i<mCountX &&j>=0 &&j<mCountY) {
@@ -136,12 +122,10 @@ public class MapPanel extends JPanel {
             }
         if(mMap[cellY][cellX] == 1)
             count--;
-        return count;*/
-    	return mCountMapCell[cellY+3][cellX+3] - mCountMapCell[cellY][cellX+3] - mCountMapCell[cellY+3][cellX] + mCountMapCell[cellY][cellX] - mMap[cellY][cellX];
+        return count;
     }
     
-    public void changeCellStatus() {  
-    	countMap();
+    public void changeCellStatus() {
         for (int row = 0; row < mCountY; row++) {  
             for (int col = 0; col < mCountX; col++) {  
   
